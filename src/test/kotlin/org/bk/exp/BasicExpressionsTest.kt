@@ -23,7 +23,7 @@ class BasicExpressionsTest {
             }
         """.trimIndent()
 
-        val result: Boolean = jsonExpressionEvaluator.evaluate(expr, json)
+        val result: Boolean = jsonExpressionEvaluator.matches(expr, json)
 
         assertThat(result).isTrue()
 
@@ -51,8 +51,8 @@ class BasicExpressionsTest {
             }
         """.trimIndent()
 
-        assertThat(jsonExpressionEvaluator.evaluate(expr, json1)).isFalse()
-        assertThat(jsonExpressionEvaluator.evaluate(expr, json2)).isTrue()
+        assertThat(jsonExpressionEvaluator.matches(expr, json1)).isFalse()
+        assertThat(jsonExpressionEvaluator.matches(expr, json2)).isTrue()
     }
 
     @Test
@@ -89,8 +89,8 @@ class BasicExpressionsTest {
             }
         """.trimIndent()
 
-        assertThat(jsonExpressionEvaluator.evaluate(expr, json1)).isTrue()
-        assertThat(jsonExpressionEvaluator.evaluate(expr, json2)).isFalse()
+        assertThat(jsonExpressionEvaluator.matches(expr, json1)).isTrue()
+        assertThat(jsonExpressionEvaluator.matches(expr, json2)).isFalse()
     }
 
     @Test
@@ -133,9 +133,9 @@ class BasicExpressionsTest {
             }
         """.trimIndent()
 
-        assertThat(jsonExpressionEvaluator.evaluate(expr, json1)).isTrue()
-        assertThat(jsonExpressionEvaluator.evaluate(expr, json2)).isTrue()
-        assertThat(jsonExpressionEvaluator.evaluate(expr, json3)).isFalse()
+        assertThat(jsonExpressionEvaluator.matches(expr, json1)).isTrue()
+        assertThat(jsonExpressionEvaluator.matches(expr, json2)).isTrue()
+        assertThat(jsonExpressionEvaluator.matches(expr, json3)).isFalse()
     }
 
     @Test
@@ -164,8 +164,8 @@ class BasicExpressionsTest {
         """.trimIndent()
 
 
-        assertThat(jsonExpressionEvaluator.evaluate(expr, json1)).isTrue()
-        assertThat(jsonExpressionEvaluator.evaluate(expr, json2)).isFalse()
+        assertThat(jsonExpressionEvaluator.matches(expr, json1)).isTrue()
+        assertThat(jsonExpressionEvaluator.matches(expr, json2)).isFalse()
     }
 
     @Test
@@ -202,8 +202,8 @@ class BasicExpressionsTest {
         """.trimIndent()
 
 
-        assertThat(jsonExpressionEvaluator.evaluate(expr, json1)).isFalse()
-        assertThat(jsonExpressionEvaluator.evaluate(expr, json2)).isTrue()
+        assertThat(jsonExpressionEvaluator.matches(expr, json1)).isFalse()
+        assertThat(jsonExpressionEvaluator.matches(expr, json2)).isTrue()
         println(jsonExpressionEvaluator.parse(expr))
     }
 }

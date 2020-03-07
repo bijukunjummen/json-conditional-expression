@@ -1,3 +1,14 @@
+# Json Expression Evaluator
+
+Given a Json which looks like this:
+
+```json
+{
+    "someKey": "someValue",
+    "otherKey": "otherValue"
+}
+```
+and an expression represented the following way:
 ```json
 {
     "equals": [
@@ -6,7 +17,29 @@
 }
 ```
 
+Running a code of the following type:
 
+```kotlin
+val jsonExpressionEvaluator: JsonExpressionEvaluator = ...
+jsonExpressionEvaluator.matches(expr, json) //returns true
+```
+
+
+## Details of the Json Expression
+
+The expression follows a very simple pattern, an operator followed by an array of details.
+
+For eg. 
+```json
+{
+    "equals": [
+        "/someKey", "someValue"
+    ]
+}
+```
+means that the json should be matched on a Json Pointer called "/someKey" and if that value is "someValue" then the expression is true
+
+Here are a few more examples:
 ```json
 {
     "contains": [
@@ -62,6 +95,8 @@
 }
 ```
 
+
+The expression can support fairly complex conditions like the following:
 ```json
 {
     "and": [

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode
 class ContainsExpression(expressionNode: ArrayNode) : Expression {
     private val jsonPointerKey: String
     private val values: List<String>
+
     init {
         val elements: List<JsonNode> = expressionNode.asSequence().toList()
         if (elements.size != 2) {
@@ -25,7 +26,12 @@ class ContainsExpression(expressionNode: ArrayNode) : Expression {
             return false
         }
 
-        val factsList: List<String> = (jsonNode as ArrayNode).asSequence().map{ node -> node.asText()}.toList()
+        val factsList: List<String> =
+            (jsonNode as ArrayNode)
+                .asSequence()
+                .map { n -> n.asText() }
+                .toList()
+
         return factsList.containsAll(values)
     }
 

@@ -11,6 +11,4 @@ class NotExpression(private val expression: Expression) : Expression {
     override fun toString(): String {
         return "not ($expression)"
     }
-
-
 }

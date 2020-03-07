@@ -9,8 +9,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode
 class JsonExpressionEvaluator(
     private val objectMapper: ObjectMapper
 ) {
-    fun evaluate(expression: String, json: String): Boolean {
-        val expressionTree: Expression  =  parse(expression)
+    fun matches(expression: String, json: String): Boolean {
+        val expressionTree: Expression = parse(expression)
         return expressionTree.evaluate(objectMapper.readTree(json))
     }
 
@@ -48,9 +48,9 @@ class JsonExpressionEvaluator(
             NOT ->
                 NotExpression(traverseAndGenerateTree(arrayNode[0]))
             AND ->
-                AndExpression(arrayNode.asSequence().map{node -> traverseAndGenerateTree(node)}.toList())
+                AndExpression(arrayNode.asSequence().map { node -> traverseAndGenerateTree(node) }.toList())
             OR ->
-                OrExpression(arrayNode.asSequence().map{node -> traverseAndGenerateTree(node)}.toList())
+                OrExpression(arrayNode.asSequence().map { node -> traverseAndGenerateTree(node) }.toList())
             CONTAINS ->
                 ContainsExpression(arrayNode)
             else ->
