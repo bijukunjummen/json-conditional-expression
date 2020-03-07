@@ -22,4 +22,10 @@ class EqualityExpression(expressionNode: ArrayNode) : Expression {
     override fun evaluate(node: JsonNode): Boolean {
         return node.at(jsonPointerKey).asText() == value
     }
+
+    override fun toString(): String {
+        return "'$jsonPointerKey'='$value'"
+    }
+
+
 }

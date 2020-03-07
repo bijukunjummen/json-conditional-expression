@@ -7,4 +7,7 @@ data class OrExpression(private val list: List<Expression>) : Expression {
         return list.asSequence().any { exp -> exp.evaluate(node) }
     }
 
+    override fun toString(): String {
+        return list.joinToString(" OR ")
+    }
 }

@@ -26,6 +26,8 @@ class BasicExpressionsTest {
         val result: Boolean = jsonExpressionEvaluator.evaluate(expr, json)
 
         assertThat(result).isTrue()
+
+
     }
 
     @Test
@@ -202,6 +204,6 @@ class BasicExpressionsTest {
 
         assertThat(jsonExpressionEvaluator.evaluate(expr, json1)).isFalse()
         assertThat(jsonExpressionEvaluator.evaluate(expr, json2)).isTrue()
+        println(jsonExpressionEvaluator.parse(expr))
     }
-
 }

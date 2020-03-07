@@ -29,4 +29,9 @@ class ContainsExpression(expressionNode: ArrayNode) : Expression {
         return factsList.containsAll(values)
     }
 
+    override fun toString(): String {
+        return "'$jsonPointerKey' contains '$values')"
+    }
+
+
 }

@@ -10,12 +10,12 @@ class JsonExpressionEvaluator(
     private val objectMapper: ObjectMapper
 ) {
     fun evaluate(expression: String, json: String): Boolean {
-        val expressionTree: Expression  =  parse(objectMapper.readTree(expression))
+        val expressionTree: Expression  =  parse(expression)
         return expressionTree.evaluate(objectMapper.readTree(json))
     }
 
-    private fun parse(expressionJson: JsonNode): Expression {
-        return traverseAndGenerateTree(expressionJson)
+    fun parse(expressionJson: String): Expression {
+        return traverseAndGenerateTree(objectMapper.readTree(expressionJson))
     }
 
     private fun traverseAndGenerateTree(expressionJson: JsonNode): Expression {
