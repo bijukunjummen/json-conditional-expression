@@ -41,18 +41,18 @@ class JsonExpressionEvaluator(
         if (!jsonNode.isArray) {
             throw ExpressionParseException("Expected an array to be passed for evaluating '$operator'")
         }
-        val arrayNode: ArrayNode = jsonNode as ArrayNode
+        val childNodes: List<JsonNode> = (jsonNode as ArrayNode).asSequence().toList()
         return when (operator) {
             EQUAL ->
-                EqualityExpression(arrayNode)
+                EqualityExpression.generate(childNodes)
             NOT ->
-                NotExpression(traverseAndGenerateTree(arrayNode[0]))
+                NotExpression(traverseAndGenerateTree(childNodes[0]))
             AND ->
-                AndExpression(arrayNode.asSequence().map { node -> traverseAndGenerateTree(node) }.toList())
+                AndExpression(childNodes.asSequence().map { node -> traverseAndGenerateTree(node) }.toList())
             OR ->
-                OrExpression(arrayNode.asSequence().map { node -> traverseAndGenerateTree(node) }.toList())
+                OrExpression(childNodes.asSequence().map { node -> traverseAndGenerateTree(node) }.toList())
             CONTAINS ->
-                ContainsExpression(arrayNode)
+                ContainsExpression(childNodes)
             else ->
                 throw ExpressionParseException("Unknown operator $operator")
         }

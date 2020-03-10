@@ -3,12 +3,11 @@ package org.bk.exp
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.ArrayNode
 
-class ContainsExpression(expressionNode: ArrayNode) : Expression {
+class ContainsExpression(elements: List<JsonNode>) : Expression {
     private val jsonPointerKey: String
     private val values: List<String>
 
     init {
-        val elements: List<JsonNode> = expressionNode.asSequence().toList()
         if (elements.size != 2) {
             throw ExpressionParseException("contains operator expects a key and a value")
         }

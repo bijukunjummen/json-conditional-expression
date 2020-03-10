@@ -24,10 +24,46 @@ class BasicExpressionsTest {
         """.trimIndent()
 
         val result: Boolean = jsonExpressionEvaluator.matches(expr, json)
-
         assertThat(result).isTrue()
+    }
+
+    @Test
+    fun simpleEqualityNumeric() {
+        val expr = """
+            {
+                "equal":["/someKey", 3] 
+            }
+        """.trimIndent()
 
 
+        val json: String = """
+            {
+                "someKey": 3
+            }
+        """.trimIndent()
+
+        val result: Boolean = jsonExpressionEvaluator.matches(expr, json)
+        assertThat(result).isTrue()
+    }
+
+    @Test
+    fun numericEqualityInvalidType() {
+        val expr = """
+            {
+                "equal":["/someKey", 3] 
+            }
+        """.trimIndent()
+
+
+        val json: String = """
+            {
+                "someKey": "3"
+            }
+        """.trimIndent()
+
+        val result: Boolean = jsonExpressionEvaluator.matches(expr, json)
+
+        assertThat(result).isFalse()
     }
 
     @Test
@@ -53,9 +89,7 @@ class BasicExpressionsTest {
 
         assertThat(jsonExpressionEvaluator.matches(expr, json1)).isFalse()
         assertThat(jsonExpressionEvaluator.matches(expr, json2)).isTrue()
-    }
-
-    @Test
+    }@Test
     fun andExpression() {
         val expr = """
             {
@@ -186,7 +220,6 @@ class BasicExpressionsTest {
             }
         """.trimIndent()
 
-
         val json1 = """
             {
                 "someCollection": ["a", "b", "c"],
@@ -204,6 +237,5 @@ class BasicExpressionsTest {
 
         assertThat(jsonExpressionEvaluator.matches(expr, json1)).isFalse()
         assertThat(jsonExpressionEvaluator.matches(expr, json2)).isTrue()
-        println(jsonExpressionEvaluator.parse(expr))
     }
 }
