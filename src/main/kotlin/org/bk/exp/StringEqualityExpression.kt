@@ -1,6 +1,8 @@
 package org.bk.exp
 
 import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.node.ArrayNode
+import com.fasterxml.jackson.databind.node.JsonNodeFactory
 
 class StringEqualityExpression(elements: List<JsonNode>) : EqualityExpression(elements) {
     private val value: String
@@ -16,9 +18,17 @@ class StringEqualityExpression(elements: List<JsonNode>) : EqualityExpression(el
         return node.at(jsonPointerKey).asText() == value
     }
 
-    override fun toString(): String {
-        return "'$jsonPointerKey'='$value'"
+    override fun asJsonNode(): JsonNode {
+        val equalsArrayNode: ArrayNode = JsonNodeFactory.instance
+            .arrayNode()
+            .add(jsonPointerKey)
+            .add(value)
+        return JsonNodeFactory.instance
+            .objectNode()
+            .set(Constants.EQUAL, equalsArrayNode)
     }
 
-
+    override fun toString(): String {
+        return asJsonNode().toString()
+    }
 }

@@ -1,13 +1,24 @@
 package org.bk.exp
 
 import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.node.ArrayNode
+import com.fasterxml.jackson.databind.node.JsonNodeFactory
 
 data class AndExpression(private val list: List<Expression>) : Expression {
     override fun evaluate(node: JsonNode): Boolean {
         return !list.asSequence().any { exp -> !exp.evaluate(node) }
     }
 
+    override fun asJsonNode(): JsonNode {
+        val listOfExpressionsNode: ArrayNode = JsonNodeFactory.instance.arrayNode()
+        list.forEach { expression -> listOfExpressionsNode.add(expression.asJsonNode()) }
+
+        return JsonNodeFactory.instance
+            .objectNode()
+            .set(Constants.AND, listOfExpressionsNode)
+    }
+
     override fun toString(): String {
-        return list.joinToString(" AND ")
+        return asJsonNode().toString()
     }
 }

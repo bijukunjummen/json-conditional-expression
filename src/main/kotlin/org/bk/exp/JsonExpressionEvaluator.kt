@@ -26,7 +26,7 @@ class JsonExpressionEvaluator(
     }
 
     private fun traverseObjectAndGenerateHash(objectNode: ObjectNode): Expression {
-        val fieldNames = objectNode.fieldNames().asSequence().toList()
+        val fieldNames: List<String> = objectNode.fieldNames().asSequence().toList()
 
         if (fieldNames.size > 1) {
             throw ExpressionParseException("Expected only 1 key to represent an operator, found '$fieldNames'")
@@ -43,28 +43,20 @@ class JsonExpressionEvaluator(
         }
         val childNodes: List<JsonNode> = (jsonNode as ArrayNode).asSequence().toList()
         return when (operator) {
-            EQUAL ->
+            Constants.EQUAL ->
                 EqualityExpression.generate(childNodes)
-            NOT ->
+            Constants.NOT ->
                 NotExpression(traverseAndGenerateTree(childNodes[0]))
-            AND ->
+            Constants.AND ->
                 AndExpression(childNodes.asSequence().map { node -> traverseAndGenerateTree(node) }.toList())
-            OR ->
+            Constants.OR ->
                 OrExpression(childNodes.asSequence().map { node -> traverseAndGenerateTree(node) }.toList())
-            CONTAINS ->
+            Constants.CONTAINS ->
                 ContainsExpression(childNodes)
+            Constants.CONTAINS_ANY_OF ->
+                ContainsAnyOfExpression(childNodes)
             else ->
                 throw ExpressionParseException("Unknown operator $operator")
         }
     }
-
-    companion object {
-        const val EQUAL = "equal"
-        const val NOT = "not"
-        const val AND = "and"
-        const val OR = "or"
-        const val CONTAINS = "contains"
-    }
-
-
 }

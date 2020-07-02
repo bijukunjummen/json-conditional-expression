@@ -4,16 +4,16 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.JsonNodeFactory
 
-class ContainsExpression(elements: List<JsonNode>) : Expression {
+class ContainsAnyOfExpression(elements: List<JsonNode>) : Expression {
     private val jsonPointerKey: String
     private val values: List<String>
 
     init {
         if (elements.size != 2) {
-            throw ExpressionParseException("contains operator expects a key and a value")
+            throw ExpressionParseException("containsAnyOf operator expects a key and a value")
         }
         if (!elements[0].isTextual || !elements[1].isArray) {
-            throw ExpressionParseException("key expected to be a string and values an array for 'contains' operator")
+            throw ExpressionParseException("key expected to be a string and values an array for 'containsAnyOf' operator")
         }
         jsonPointerKey = elements[0].asText()
         values = (elements[1] as ArrayNode).asSequence().map { node -> node.asText() }.toList()
@@ -32,7 +32,7 @@ class ContainsExpression(elements: List<JsonNode>) : Expression {
                 .map { n: JsonNode -> n.asText() }
                 .toList()
 
-        return factsList.containsAll(values)
+        return factsList.intersect(values).isNotEmpty()
     }
 
     override fun asJsonNode(): JsonNode {
@@ -48,7 +48,7 @@ class ContainsExpression(elements: List<JsonNode>) : Expression {
 
         return JsonNodeFactory.instance
             .objectNode()
-            .set(Constants.CONTAINS, containsArrayNode)
+            .set(Constants.CONTAINS_ANY_OF, containsArrayNode)
     }
 
     override fun toString(): String {
