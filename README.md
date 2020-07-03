@@ -1,5 +1,7 @@
 # Json Expression Evaluator
 
+This is a small Java based library to create and evaluate a json based conditional expression. 
+
 Given a Json which looks like this:
 
 ```json
@@ -8,7 +10,9 @@ Given a Json which looks like this:
     "otherKey": "otherValue"
 }
 ```
+
 and an expression represented the following way:
+
 ```json
 {
     "equals": [
@@ -20,8 +24,7 @@ and an expression represented the following way:
 Running a code of the following type:
 
 ```kotlin
-val jsonExpressionEvaluator: JsonExpressionEvaluator = ...
-jsonExpressionEvaluator.matches(expr, json) //returns true
+JsonExpressionEvaluator.matches(expr, json) //returns true
 ```
 
 
@@ -43,6 +46,14 @@ Here are a few more examples:
 ```json
 {
     "contains": [
+        "/someCollection", ["a", "b"]
+    ]
+}
+```
+
+```json
+{
+    "containsAnyOf": [
         "/someCollection", ["a", "b"]
     ]
 }
@@ -94,7 +105,6 @@ Here are a few more examples:
     ]
 }
 ```
-
 
 The expression can support fairly complex conditions like the following:
 ```json
