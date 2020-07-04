@@ -30,7 +30,8 @@ JsonExpressionEvaluator.matches(expr, json) //returns true
 
 ## Details of the Json Expression
 
-The expression follows a very simple pattern, an operator followed by an array of details.
+The expression follows a very simple pattern, an operator followed by an array of details. It is inspired 
+by the [JsonLogic](http://jsonlogic.com/) project.
 
 For eg. 
 ```json
