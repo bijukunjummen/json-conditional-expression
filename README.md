@@ -24,7 +24,8 @@ and an expression represented the following way:
 Running a code of the following type:
 
 ```kotlin
-JsonExpressionEvaluator.matches(expr, json) //returns true
+val jsonExpressionEvaluator: JsonExpressionEvaluator = JsonExpressionEvaluator(ObjectMapper())
+jsonExpressionEvaluator.matches(expr, json) //returns true
 ```
 
 
