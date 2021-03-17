@@ -140,7 +140,7 @@ The expression can support fairly complex conditions like the following:
 Through a Gradle dependency:
 
 ```
-implementation 'com.github.bijukunjummen:json-conditional-expression:0.4.0'
+implementation 'com.github.bijukunjummen:json-conditional-expression:0.5.0'
 ```
 
 Or via maven:
@@ -148,7 +148,7 @@ Or via maven:
 <dependency>
 	<groupId>com.github.bijukunjummen</groupId>
 	<artifactId>json-conditional-expression</artifactId>
-	<version>0.4.0</version>
+	<version>0.5.0</version>
 	<type>pom</type>
 </dependency>
 ```
